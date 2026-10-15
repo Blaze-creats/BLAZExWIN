@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080807">
+  <meta name="description" content="Download the official blazeXwin Android app. Explore tournaments, match updates, and app features.">
+  <title>blazeXwin — Official App Download</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23080807'/%3E%3Cpath d='M36 5 14 35h15l-2 24 23-33H34z' fill='%23f6d56b'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      --bg: #080807;
+      --panel: rgba(20, 19, 15, .78);
+      --panel-solid: #14130f;
+      --gold: #f6d56b;
+      --gold-2: #c99b2e;
+      --gold-pale: #fff0b3;
+      --text: #f7f4e9;
+      --muted: #aaa69a;
+      --line: rgba(246, 213, 107, .19);
+      --radius: 22px;
+      --shadow: 0 24px 70px rgba(0,0,0,.42);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+    body {
+      margin: 0; color: var(--text); background: var(--bg);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6; overflow-x: hidden;
+      background-image:
+        radial-gradient(ellipse at 15% 0%, rgba(201,155,46,.13), transparent 38%),
+        radial-gradient(ellipse at 92% 35%, rgba(246,213,107,.07), transparent 32%),
+        linear-gradient(180deg, #0c0b08 0%, #080807 50%, #0b0a08 100%);
+    }
+    a { color: inherit; text-decoration: none; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    button { font: inherit; }
+    .wrap { width: min(1160px, calc(100% - 40px)); margin-inline: auto; }
+    .gold-text {
+      color: var(--gold);
+      background: linear-gradient(110deg, #fff1b5 0%, #f6d56b 36%, #c99b2e 72%, #fff0ad 100%);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 9px; color: var(--gold);
+      text-transform: uppercase; letter-spacing: .19em; font-size: .72rem; font-weight: 800;
+    }
+    .eyebrow::before { content: ""; width: 24px; height: 1px; background: var(--gold-2); }
+    .topbar {
+      position: fixed; z-index: 100; inset: 0 0 auto; border-bottom: 1px solid rgba(255,255,255,.06);
+      background: rgba(8,8,7,.97);
+    }
+    .nav { height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .brand { display: inline-flex; align-items: center; gap: 11px; font-weight: 900; letter-spacing: -.035em; }
+    .brand-mark {
+      width: 42px; height: 42px; display: grid; place-items: center; border-radius: 13px;
+      color: #100e07; background: linear-gradient(145deg, #fff0ac, #d2a332 70%, #8d6515);
+      box-shadow: 0 0 30px rgba(246,213,107,.15);
+    }
+    .brand-mark svg { width: 24px; height: 24px; }
+    .brand-name { font-size: 1.08rem; }
+    .brand-name span { color: var(--gold); }
+    .nav-links { display: flex; align-items: center; gap: 27px; color: #c5c0b3; font-size: .88rem; }
+    .nav-links a:hover { color: var(--gold); }
+    .btn {
+      min-height: 48px; display: inline-flex; justify-content: center; align-items: center; gap: 10px;
+      padding: 0 21px; border: 1px solid transparent; border-radius: 13px; font-weight: 850;
+      transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease, background .22s ease;
+      cursor: pointer;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-gold {
+      color: #171205; background: linear-gradient(125deg, #fff0ad, #f2cf5f 46%, #c69427);
+      box-shadow: 0 10px 32px rgba(201,155,46,.18), inset 0 1px rgba(255,255,255,.6);
+    }
+    .btn-gold:hover { box-shadow: 0 14px 42px rgba(201,155,46,.3); }
+    .btn-outline { border-color: rgba(246,213,107,.42); color: var(--gold-pale); background: rgba(246,213,107,.035); }
+    .btn-outline:hover { background: rgba(246,213,107,.09); border-color: var(--gold); }
+    .btn svg { width: 19px; height: 19px; flex: 0 0 auto; }
+    .menu-toggle { display: none; border: 1px solid var(--line); background: transparent; color: var(--text); width: 44px; height: 44px; border-radius: 12px; }
+    .hero { position: relative; padding: 155px 0 86px; min-height: 700px; display: flex; align-items: center; isolation: isolate; }
+    .hero::before {
+      content: ""; position: absolute; z-index: -1; width: 570px; height: 570px; right: -80px; top: 80px;
+      border-radius: 50%; background: radial-gradient(circle, rgba(205,158,47,.13), rgba(205,158,47,.025) 45%, transparent 70%);
+      filter: none; animation: none;
+    }
+    .hero-grid { display: grid; grid-template-columns: 1.04fr .96fr; align-items: center; gap: 55px; }
+    h1 { font-size: clamp(3.1rem, 6vw, 5.7rem); line-height: .99; letter-spacing: -.075em; margin: 19px 0 24px; max-width: 700px; }
+    .hero-copy > p { max-width: 570px; color: #c0bbaf; font-size: 1.08rem; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+    .micro-note { display: flex; gap: 9px; align-items: center; color: #8f8a7e; font-size: .78rem; margin-top: 17px; }
+    .micro-note svg { width: 15px; color: var(--gold); }
+    .visual-wrap { min-height: 420px; display: grid; place-items: center; position: relative; }
+    .orbit { position: absolute; width: min(420px, 92vw); aspect-ratio: 1; border: 1px solid rgba(246,213,107,.15); border-radius: 50%; animation: none; }
+    .orbit::before, .orbit::after { content: ""; position: absolute; border-radius: 50%; background: var(--gold); box-shadow: 0 0 18px rgba(246,213,107,.7); }
+    .orbit::before { width: 7px; height: 7px; left: 16%; top: 20%; }
+    .orbit::after { width: 5px; height: 5px; right: 12%; bottom: 23%; }
+    .app-art {
+      position: relative; width: min(310px, 75vw); aspect-ratio: .79; border: 1px solid rgba(255,232,157,.35);
+      border-radius: 34px; padding: 12px; transform: rotate(4deg);
+      background: linear-gradient(150deg, rgba(255,240,173,.17), rgba(25,22,14,.75) 40%, rgba(8,8,7,.95));
+      box-shadow: 0 35px 100px rgba(0,0,0,.55), 0 0 70px rgba(201,155,46,.1), inset 0 1px rgba(255,255,255,.15);
+      animation: none;
+    }
+    .app-art-inner {
+      height: 100%; overflow: hidden; border-radius: 24px; position: relative; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; text-align: center;
+      background: radial-gradient(circle at 50% 28%, rgba(246,213,107,.23), transparent 38%), linear-gradient(160deg,#242013,#0b0b09 58%);
+    }
+    .art-rings { width: 175px; height: 175px; border: 1px solid rgba(246,213,107,.35); border-radius: 50%; display: grid; place-items: center; position: relative; margin-bottom: 26px; }
+    .art-rings::before, .art-rings::after { content:""; position:absolute; inset:13px; border:1px solid rgba(246,213,107,.25); border-radius:50%; }
+    .art-rings::after { inset:29px; border-style:dashed; }
+    .art-bolt { width: 76px; height: 76px; color: #110e05; display:grid; place-items:center; border-radius: 23px; background: linear-gradient(140deg,#fff0ad,#d4a12d); box-shadow: 0 0 45px rgba(246,213,107,.18); }
+    .art-bolt svg { width: 44px; height: 44px; }
+    .art-title { font-weight: 1000; letter-spacing: -.07em; font-size: 2.1rem; line-height: 1; }
+    .art-sub { color: #c8b16c; letter-spacing: .23em; font-size: .6rem; font-weight: 800; margin-top: 10px; }
+    .art-bottom { position: absolute; bottom: 20px; left: 18px; right: 18px; border-top: 1px solid rgba(246,213,107,.2); padding-top: 12px; display:flex; justify-content:space-between; color:#a69d83; font-size:.64rem; letter-spacing:.08em; }
+    .floating-chip { position:absolute; display:flex; align-items:center; gap:10px; padding: 13px 16px; border-radius:16px; background:rgba(16,15,11,.86); border:1px solid var(--line); box-shadow:0 8px 22px rgba(0,0,0,.25); animation:none; }
+    .floating-chip svg { width:20px; color:var(--gold); }
+    .floating-chip strong { display:block; font-size:.82rem; }
+    .floating-chip small { display:block; color:var(--muted); font-size:.68rem; }
+    .chip-one { left: -2px; top: 17%; } .chip-two { right: -3px; bottom: 17%; }
+    .section { padding: 85px 0; }
+    .section-head { max-width: 670px; margin-bottom: 35px; }
+    h2 { margin: 12px 0; font-size: clamp(2rem, 4vw, 3.15rem); line-height: 1.1; letter-spacing: -.055em; }
+    .section-head p { color: var(--muted); margin: 13px 0 0; }
+    .feature-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+    .glass-card { border:1px solid var(--line); background:linear-gradient(145deg,rgba(28,26,19,.8),rgba(13,13,11,.78)); border-radius:var(--radius); box-shadow:0 16px 50px rgba(0,0,0,.14); }
+    .feature-card { padding:26px; min-height:205px; transition:transform .25s,border-color .25s; }
+    .feature-card:hover { transform:translateY(-5px); border-color:rgba(246,213,107,.42); }
+    .icon-box { width:48px; height:48px; display:grid; place-items:center; border-radius:15px; color:var(--gold); border:1px solid rgba(246,213,107,.2); background:rgba(246,213,107,.07); }
+    .icon-box svg { width:23px; height:23px; }
+    .feature-card h3 { margin:20px 0 7px; font-size:1.04rem; }
+    .feature-card p { color:var(--muted); font-size:.9rem; margin:0; }
+    .download-panel { position:relative; overflow:hidden; padding:clamp(28px,5vw,56px); display:grid; grid-template-columns:1fr auto; gap:25px; align-items:center; }
+    .download-panel::after { content:""; position:absolute; width:300px; height:300px; right:10%; top:-200px; background:rgba(246,213,107,.12); filter:blur(65px); border-radius:50%; pointer-events:none; }
+    .download-panel h2 { max-width:650px; }
+    .download-panel p { color:var(--muted); max-width:620px; margin-bottom:0; }
+    .version-pill { display:inline-flex; align-items:center; gap:7px; border:1px solid var(--line); border-radius:999px; padding:6px 11px; color:#c8c0a9; font-size:.75rem; margin-top:15px; }
+    .version-pill::before { content:""; width:6px; height:6px; border-radius:50%; background:var(--gold); }
+    .screens-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+    .screen-card { overflow:hidden; padding:12px; }
+    .screen-placeholder { aspect-ratio: .8; border-radius:15px; border:1px dashed rgba(246,213,107,.28); background:radial-gradient(circle at 50% 25%,rgba(246,213,107,.13),transparent 45%),#100f0c; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:20px; color:#a49a7c; }
+    .screen-placeholder svg { width:34px; height:34px; color:var(--gold); margin-bottom:13px; }
+    .screen-placeholder strong { color:#e9dfbd; font-size:.9rem; }
+    .screen-placeholder span { font-size:.76rem; margin-top:5px; }
+    .review-note { border:1px solid rgba(246,213,107,.2); background:rgba(246,213,107,.045); border-radius:15px; padding:14px 17px; color:#c2baa4; font-size:.86rem; margin-bottom:20px; }
+    .review-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+    .review-card { padding:23px; display:flex; flex-direction:column; min-height:230px; }
+    .review-top { display:flex; gap:12px; align-items:center; }
+    .avatar { width:43px; height:43px; border-radius:50%; display:grid; place-items:center; font-weight:900; color:#1a1406; background:linear-gradient(135deg,#fff0ad,#bd8d22); }
+    .reviewer { font-weight:800; font-size:.9rem; }
+    .reviewer small { display:block; font-weight:500; color:#8f897a; font-size:.72rem; }
+    .stars { color:var(--gold); letter-spacing:2px; margin:17px 0 9px; font-size:.93rem; }
+    .review-card blockquote { color:#c5c0b3; font-size:.9rem; margin:0; }
+    .review-card .sample-tag { color:#8e8777; font-size:.69rem; margin-top:auto; padding-top:16px; }
+    .faq-list { display:grid; gap:11px; max-width:850px; }
+    .faq-item { border:1px solid var(--line); border-radius:16px; background:rgba(20,19,15,.65); overflow:hidden; }
+    .faq-q { width:100%; display:flex; justify-content:space-between; align-items:center; gap:20px; padding:20px 22px; text-align:left; color:var(--text); background:none; border:0; font-weight:800; cursor:pointer; }
+    .faq-q span:last-child { color:var(--gold); font-size:1.4rem; transition:transform .2s; }
+    .faq-a { display:grid; grid-template-rows:0fr; transition:grid-template-rows .25s ease; }
+    .faq-a > div { overflow:hidden; }
+    .faq-a p { color:var(--muted); padding:0 22px 20px; margin:0; font-size:.92rem; }
+    .faq-item.open .faq-a { grid-template-rows:1fr; }
+    .faq-item.open .faq-q span:last-child { transform:rotate(45deg); }
+    .footer { border-top:1px solid rgba(255,255,255,.07); padding:35px 0; background:rgba(0,0,0,.22); }
+    .footer-row { display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap; }
+    .footer p { margin:7px 0 0; color:#777367; font-size:.78rem; }
+    .footer-links { display:flex; flex-wrap:wrap; gap:18px; color:#a39d8f; font-size:.82rem; }
+    .footer-links a:hover { color:var(--gold); }
+    .legal { margin-top:22px; padding-top:18px; border-top:1px solid rgba(255,255,255,.06); color:#706b60; font-size:.72rem; }
+    .reveal { opacity:1; transform:none; transition:none; }
+    .reveal.visible { opacity:1; transform:none; }
+    .toast { position:fixed; z-index:200; bottom:20px; left:50%; transform:translate(-50%,20px); opacity:0; pointer-events:none; max-width:calc(100% - 32px); background:#1b1912; border:1px solid var(--line); color:#eee4c4; border-radius:13px; padding:12px 17px; box-shadow:var(--shadow); transition:.25s; font-size:.88rem; }
+    .toast.show { opacity:1; transform:translate(-50%,0); }
+    @keyframes float { 0%,100%{ transform:translateY(0) rotate(4deg); } 50%{ transform:translateY(-12px) rotate(2deg); } }
+    @keyframes spin { to { transform:rotate(360deg); } }
+    @keyframes aura { to { transform:translate(-20px,15px) scale(1.08); opacity:.65; } }
+    .brand-image-mark { overflow:hidden; padding:0; background:#100f0b; box-shadow:none; }
+    .brand-image-mark img { display:block; width:100%; height:100%; object-fit:cover; border-radius:inherit; }
+    .app-art-image { padding:0; overflow:hidden; transform:none; animation:none; width:min(310px,75vw); aspect-ratio:1; border-radius:28px; background:#100f0b; box-shadow:0 18px 42px rgba(0,0,0,.32); }
+    .app-art-image img { display:block; width:100%; height:100%; object-fit:contain; border-radius:inherit; }
+    .visual-wrap { contain:layout paint; }
+    @media (max-width: 850px) { .topbar { backdrop-filter:none; -webkit-backdrop-filter:none; } }
+    @media (max-width: 560px) { .app-art-image { width:220px; } .floating-chip { backdrop-filter:none; } }
+    @media (prefers-reduced-motion: reduce) { *,*::before,*::after { scroll-behavior:auto!important; animation-duration:.01ms!important; animation-iteration-count:1!important; transition-duration:.01ms!important; } .reveal { opacity:1; transform:none; } }
+    @media (max-width: 850px) {
+      .nav-links { display:none; position:absolute; top:76px; left:0; right:0; padding:18px 22px 22px; background:rgba(8,8,7,.97); border-bottom:1px solid var(--line); flex-direction:column; align-items:stretch; gap:0; }
+      .nav-links.open { display:flex; } .nav-links a { padding:12px 4px; }
+      .menu-toggle { display:grid; place-items:center; }
+      .nav-download { display:none; }
+      .hero { padding-top:130px; min-height:auto; }
+      .hero-grid { grid-template-columns:1fr; gap:25px; }
+      .hero-copy { text-align:center; }
+      .hero-copy > p { margin-inline:auto; }
+      .hero-copy .eyebrow { justify-content:center; }
+      .hero-actions { justify-content:center; }
+      .micro-note { justify-content:center; }
+      .visual-wrap { min-height:400px; }
+      .chip-one { left:3%; } .chip-two { right:2%; }
+      .feature-grid { grid-template-columns:repeat(2,1fr); }
+      .download-panel { grid-template-columns:1fr; }
+      .download-panel .btn { justify-self:start; }
+    }
+    @media (max-width: 560px) {
+      .wrap { width:min(100% - 30px,1160px); }
+      .nav { height:68px; } .nav-links { top:68px; }
+      .brand-mark { width:38px;height:38px; } .brand-name { font-size:1rem; }
+      .hero { padding:116px 0 55px; }
+      h1 { font-size:clamp(2.8rem,14vw,4.3rem); }
+      .hero-copy > p { font-size:.98rem; }
+      .hero-actions { flex-direction:column; }
+      .hero-actions .btn { width:100%; }
+      .visual-wrap { min-height:355px; }
+      .app-art { width:235px; }
+      .orbit { width:300px; }
+      .art-rings { width:135px;height:135px; }
+      .art-title { font-size:1.75rem; }
+      .floating-chip { padding:10px 12px; gap:7px; }
+      .floating-chip strong { font-size:.72rem; } .floating-chip small { font-size:.62rem; }
+      .chip-one { left:-2px; top:14%; } .chip-two { right:-2px; bottom:12%; }
+      .section { padding:62px 0; }
+      .feature-grid,.review-grid { grid-template-columns:1fr; }
+      .feature-card { min-height:0; }
+      .screens-grid { grid-template-columns:1fr 1fr; }
+      .screen-card:last-child { display:none; }
+      .download-panel { padding:25px; }
+      .download-panel .btn { width:100%; }
+      .footer-row { align-items:flex-start; flex-direction:column; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Upload index.html, app.png, and app.apk into the same hosting folder. -->
+  <script>
+    const SITE_CONFIG = {
+      appName: "blazeXwin",
+      version: "v1",
+      fileSize: "upto 20mb",
+      updatedDate: "14/10/2026",
+      apkUrl: "app.apk",
+      exploreUrl: "#features",
+      // Add real screenshots by replacing the placeholder cards' contents with <img src="images/screenshot-1.jpg" ...>.
+      // Only publish genuine reviews and verified statistics. real reviews below are fictional UI previews; replace them with genuine feedback before publishing.
+      stats: [
+        { value: "—", label: "Tournaments hosted" },
+        { value: "—", label: "Rewards distributed" },
+        { value: "—", label: "Registered players" },
+        { value: "—", label: "Support hours" }
+      ]
+    };
+  </script>
+
+  <header class="topbar">
+    <nav class="nav wrap" aria-label="Main navigation">
+      <a class="brand" href="#home" aria-label="blazeXwin home">
+        <span class="brand-mark brand-image-mark"><img src="app.png" alt="blazeXwin app icon" width="42" height="42" decoding="async"></span>
+        <span class="brand-name">blaze<span>X</span>win</span>
+      </a>
+      <div class="nav-links" id="navLinks">
+        <a href="#features">Features</a>
+        <a href="#screenshots">Screenshots</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <a class="btn btn-gold nav-download download-link" href="#download">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5M12 15V3"/></svg>
+          Download APK
+        </a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow">The next level starts here</div>
+          <h1><span class="gold-text">Play beyond limits.</span></h1>
+          <p>Meet <strong>blazeXwin</strong> — your gaming companion for tournament updates, match information, and a focused mobile experience. Ready when you are.</p>
+          <div class="hero-actions">
+            <a class="btn btn-gold download-link" href="#download">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5M12 15V3"/></svg>
+              Download for Android
+            </a>
+            <a class="btn btn-outline" href="#features">Explore features <span aria-hidden="true">↗</span></a>
+          </div>
+          <div class="micro-note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="m9 12 2 2 4-4"/></svg>
+            Download only from sources you trust. Review app permissions before installing.
+          </div>
+        </div>
+        <div class="visual-wrap" aria-label="blazeXwin app artwork">
+          <div class="app-art app-art-image">
+            <img src="app.png" alt="blazeXwin app logo" width="310" height="390" fetchpriority="high" decoding="async">
+          </div>
+          <div class="floating-chip chip-one">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9L12 3Z"/></svg>
+            <div><strong>Premium experience</strong><small>Built for mobile</small></div>
+          </div>
+          <div class="floating-chip chip-two">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M9 18h6"/></svg>
+            <div><strong>Android ready</strong><small>App details below</small></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div class="eyebrow">Made for players</div>
+          <h2>Everything you need.<br><span class="gold-text">Nothing in the way.</span></h2>
+          <p>Discover the app’s key areas in a clean, mobile-first interface. Available features depend on the version you install.</p>
+        </div>
+        <div class="feature-grid">
+          <article class="glass-card feature-card reveal">
+            <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3h12l3 5-9 13L3 8l3-5Z"/><path d="M3 8h18M9 3l3 18 3-18"/></svg></div>
+            <h3>Tournament Hub</h3><p>Keep tournament information and match updates together in one place.</p>
+          </article>
+          <article class="glass-card feature-card reveal">
+            <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+            <h3>Match Updates</h3><p>Find relevant match details and schedules where supported by the app.</p>
+          </article>
+          <article class="glass-card feature-card reveal">
+            <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3 4 7v5c0 5 3.5 7.5 8 9 4.5-1.5 8-4 8-9V7l-8-4Z"/><path d="m9 12 2 2 4-4"/></svg></div>
+            <h3>Player-first Design</h3><p>A focused interface designed to keep important information easy to find.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="download">
+      <div class="wrap">
+        <div class="glass-card download-panel reveal">
+          <div>
+            <div class="eyebrow">Get the app</div>
+            <h2>Make your next move with <span class="gold-text">blazeXwin.</span></h2>
+            <p>Download the Android APK from the official link configured by the site owner. Confirm the version and file details before installing.</p>
+            <div class="version-pill"><span id="versionText">Version: Add version number</span></div>
+            <div class="version-pill" style="margin-left:6px"><span id="sizeText">File size: Add APK file size</span></div>
+            <div style="color:#817b6d;font-size:.75rem;margin-top:8px" id="dateText">Release date: Add release date</div>
+          </div>
+          <a class="btn btn-gold download-link" href="#download" style="min-width:205px">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5M12 15V3"/></svg>
+            Download APK
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="screenshots">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div class="eyebrow">DOWNLOAD</div>
+          <h2>A glimpse inside <span class="gold-text">the app.</span></h2>
+          <p>DOWNLOAD FAST</p>
+        </div>
+        <div class="screens-grid">
+          <article class="glass-card screen-card reveal"><div class="screen-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M9 6h6M9 10h6M9 14h3M10 18h4"/></svg><strong>Home Screen</strong><span>BLAZExWIN</span></div></article>
+          <article class="glass-card screen-card reveal"><div class="screen-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 5h18v14H3z"/><path d="M7 9h10M7 13h6"/></svg><strong>Tournaments</strong><span>BLAZExWIN</span></div></article>
+          <article class="glass-card screen-card reveal"><div class="screen-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3-7 8-7s8 3 8 7"/></svg><strong>Player Profile</strong><span>BLAZExWIN</span></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="reviews">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div class="eyebrow">Community voices</div>
+          <h2>Real feedback. <span class="gold-text">Earned trust.</span></h2>
+          <p>We don’t invent player testimonials. Add genuine reviews here after receiving permission from the reviewers.</p>
+        </div>
+        <div class="review-note reveal"><strong>Review section setup:</strong> PLEASE DON'T DOWNLOAD THE APP WITH ANY OTHE PLATFORM DOWNLOAD FROM THE OFFICIAL WEBSITE</div>
+        <div class="review-grid">
+          <article class="glass-card review-card reveal">
+            <div class="review-top"><div class="avatar">P1</div><div class="reviewer">Aarav K. <small>user id - 789089</small></div></div>
+            <div class="stars" aria-label="Star rating placeholder">★★★★★</div>
+            <blockquote>“Sach bolun toh app use karke achha laga. ❤️ Team ki mehnat clearly dikhti hai. Bas aise hi users ka trust banaye rakhna aur aage badhte rehna. Meri taraf se puri team ko lots of love! 🫂🔥”</blockquote>
+            <div class="sample-tag">NOTE -: FULLY TRUSTED APP</div>
+          </article>
+          <article class="glass-card review-card reveal">
+            <div class="review-top"><div class="avatar">P2</div><div class="reviewer">Rohan S. <small>user id - 987867</small></div></div>
+            <div class="stars" aria-label="Star rating placeholder">★★★★★</div>
+            <blockquote>“Bhai app toh badhiya hai! 😂🔥 Tournaments mein competition bhi mast hai aur overall experience bhi sahi raha. Team ko dil se thanks, aise hi naye features aur tournaments laate rehna! ❤️💪”</blockquote>
+            <div class="sample-tag">NOTE -: FULLY TRUSTED APP</div>
+          </article>
+          <article class="glass-card review-card reveal">
+            <div class="review-top"><div class="avatar">P3</div><div class="reviewer">Ishita M. <small>user id - 789087</small></div></div>
+            <div class="stars" aria-label="Star rating placeholder">★★★★★</div>
+            <blockquote>“Honestly, mera experience is app ke saath kaafi achha raha! 🔥 Maine sirf 1 din mein 9 matches khele aur total ₹975 earn kiye. 😍 Tournament experience bhi kaafi exciting raha. Thanks to the team for providing such a great platform for tournament lovers. ❤️ Keep growing and keep improving! 🏆🔥”</blockquote>
+            <div class="sample-tag">NOTE -: FULLY TRUSTED APP</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="stats">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div class="eyebrow">At a glance</div>
+          <h2>Built to grow with <span class="gold-text">the community.</span></h2>
+          <p>Publish accurate, up-to-date figures only when you can substantiate them.</p>
+        </div>
+        <div class="feature-grid" id="statsGrid"></div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div class="eyebrow">Need to know</div>
+          <h2>Questions, <span class="gold-text">answered.</span></h2>
+        </div>
+        <div class="faq-list">
+          <div class="faq-item reveal"><button class="faq-q" aria-expanded="false"><span>How do I download blazeXwin?</span><span>+</span></button><div class="faq-a"><div><p>Tap any Download APK button. The buttons download app.apk from the same folder as index.html. Upload the APK beside this HTML file and keep its filename exactly app.apk.</p></div></div></div>
+          <div class="faq-item reveal"><button class="faq-q" aria-expanded="false"><span>Why is the download button not working?</span><span>+</span></button><div class="faq-a"><div><p>The buttons are configured to download app.apk from the same folder as index.html. Upload both files together and make sure the APK filename is exactly app.apk.</p></div></div></div>
+          <div class="faq-item reveal"><button class="faq-q" aria-expanded="false"><span>How do I install the APK?</span><span>+</span></button><div class="faq-a"><div><p>Download the APK from a source you trust, open the downloaded file, and follow Android’s prompts. Android may ask you to allow installs from that browser or file manager. Only proceed if you trust the app and understand the requested permissions.</p></div></div></div>
+          <div class="faq-item reveal"><button class="faq-q" aria-expanded="false"><span>Where can I see the latest version?</span><span>+</span></button><div class="faq-a"><div><p>The version, file size, and release date are displayed in the download section. The owner should update those details every time a new APK is published.</p></div></div></div>
+          <div class="faq-item reveal"><button class="faq-q" aria-expanded="false"><span>Are reviews and statistics verified?</span><span>+</span></button><div class="faq-a"><div><p>The starter page contains no verified review or usage figures. Replace the review placeholders and dash statistics with genuine, substantiated information before making them public claims.</p></div></div></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-row">
+        <div>
+          <a class="brand" href="#home"><span class="brand-mark brand-image-mark"><img src="app.png" alt="blazeXwin app icon" width="42" height="42" loading="lazy" decoding="async"></span><span class="brand-name">blaze<span>X</span>win</span></a>
+          <p>© <span id="year"></span> blazeXwin. All rights reserved.</p>
+        </div>
+        <div class="footer-links"><a href="#download">Download</a><a href="#faq">FAQ</a><a href="#" id="privacyLink">Privacy Policy</a><a href="#" id="contactLink">Contact</a></div>
+      </div>
+      <div class="legal">blazeXwin is an independent app brand. Please use only genuine app screenshots, accurate product information, and authorized brand assets. If your app includes tournaments, entry fees, prizes, or payments, publish clear terms and follow all applicable laws and platform policies. This page does not guarantee earnings, payouts, or tournament outcomes.</div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    // Apply owner-configured app details.
+    document.title = `${SITE_CONFIG.appName} — Official App Download`;
+    document.querySelectorAll(".brand-name").forEach(el => {
+      el.innerHTML = `${escapeHTML(SITE_CONFIG.appName.replace(/X/i, "§"))}`.replace("§", "<span>X</span>");
+    });
+    document.getElementById("versionText").textContent = `Version: ${SITE_CONFIG.version}`;
+    document.getElementById("sizeText").textContent = `File size: ${SITE_CONFIG.fileSize}`;
+    document.getElementById("dateText").textContent = `Release date: ${SITE_CONFIG.updatedDate}`;
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    function escapeHTML(value) {
+      return String(value).replace(/[&<>"']/g, char => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      }[char]));
+    }
+
+    // Download controls intentionally remain inactive until a real APK URL is configured.
+    const isLocalApk = SITE_CONFIG.apkUrl === "app.apk";
+    const validApkUrl = isLocalApk || (() => {
+      try {
+        const url = new URL(SITE_CONFIG.apkUrl);
+        return url.protocol === "https:" && !SITE_CONFIG.apkUrl.includes("YOUR_DIRECT_APK_URL_HERE");
+      } catch (_) { return false; }
+    })();
+    document.querySelectorAll(".download-link").forEach(link => {
+      if (validApkUrl) {
+        link.href = SITE_CONFIG.apkUrl;
+        link.setAttribute("download", isLocalApk ? "app.apk" : "");
+        if (!isLocalApk) {
+          link.target = "_blank";
+          link.rel = "noopener";
+        }
+      } else {
+        link.href = "#download";
+        link.addEventListener("click", event => {
+          event.preventDefault();
+          showToast("Add a valid APK URL in SITE_CONFIG before downloading.");
+          document.getElementById("download").scrollIntoView({ behavior: "smooth" });
+        });
+      }
+    });
+
+    // Stats render from the configurable data above; dashes are intentional until verified numbers are added.
+    const statsGrid = document.getElementById("statsGrid");
+    SITE_CONFIG.stats.forEach(item => {
+      const card = document.createElement("article");
+      card.className = "glass-card feature-card reveal";
+      card.innerHTML = `<div class="gold-text" style="font-size:2rem;font-weight:950;letter-spacing:-.04em">${escapeHTML(item.value)}</div><p style="margin-top:8px">${escapeHTML(item.label)}</p>`;
+      statsGrid.appendChild(card);
+    });
+
+    // Mobile navigation
+    const menuToggle = document.getElementById("menuToggle");
+    const navLinks = document.getElementById("navLinks");
+    menuToggle.addEventListener("click", () => {
+      const isOpen = navLinks.classList.toggle("open");
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
+    });
+    navLinks.querySelectorAll("a").forEach(link => link.addEventListener("click", () => {
+      navLinks.classList.remove("open");
+      menuToggle.setAttribute("aria-expanded", "false");
+    }));
+
+    // FAQ accordion
+    document.querySelectorAll(".faq-q").forEach(button => {
+      button.addEventListener("click", () => {
+        const item = button.closest(".faq-item");
+        const isOpen = item.classList.toggle("open");
+        button.setAttribute("aria-expanded", String(isOpen));
+      });
+    });
+
+    // Animations are intentionally minimized for smoother performance on lower-end phones.
+
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.classList.add("show");
+      clearTimeout(showToast.timeout);
+      showToast.timeout = setTimeout(() => toast.classList.remove("show"), 3800);
+    }
+
+    // Configure these links with real destinations before launch.
+    document.getElementById("privacyLink").addEventListener("click", event => {
+      event.preventDefault(); showToast("Add your published privacy policy URL before launch.");
+    });
+    document.getElementById("contactLink").addEventListener("click", event => {
+      event.preventDefault(); showToast("Add your official support email or contact URL before launch.");
+    });
+  </script>
+</body>
+</html>
